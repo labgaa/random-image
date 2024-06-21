@@ -1,11 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Images</title>
-</head>
-<body>
-    
-</body>
+    <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover {
+        background-color: #111;
+      }
+      .button {
+        display: flex;
+        justify-content: center;
+        margin-top: 20%;
+        padding: 20px;
+        background-color: YELLOW;
+        margin-right: 30%;
+        margin-left: 30%;
+      }
+      label {
+        cursor: pointer;
+        font-size: 1em;
+      }
+
+      /* 못생긴 기존 input 숨기기 */
+      #chooseFile {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li><a href="images.html">Images</a></li>
+      <li><a href="about.asp">About</a></li>
+    </ul>
+    <form method="post" enctype="multipart/form-data">
+      <div class="button">
+        <label for="chooseFile">  UPLOAD  </label>
+      </div>
+      <input
+        type="file"
+        id="chooseFile"
+        name="chooseFile"
+        accept="image/*"
+        onchange="loadFile(this)"
+      />
+    </form>
+    <script>
+      function loadFile(input) {
+        var file = input.files[0]; //선택된 파일 가져오기
+
+        //미리 만들어 놓은 div에 text(파일 이름) 추가
+        var name = document.getElementById("fileName");
+        name.textContent = file.name;
+
+        //새로운 이미지 div 추가
+        var newImage = document.createElement("img");
+        newImage.setAttribute("class", "img");
+
+        //이미지 source 가져오기
+        newImage.src = URL.createObjectURL(file);
+
+        newImage.style.width = "70%";
+        newImage.style.height = "70%";
+        newImage.style.visibility = "hidden"; //버튼을 누르기 전까지는 이미지를 숨긴다
+        newImage.style.objectFit = "contain";
+
+        //이미지를 image-show div에 추가
+        var container = document.getElementById("image-show");
+        container.appendChild(newImage);
+      }
+    </script>
+  </body>
 </html>
